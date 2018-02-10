@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from firebase import firebase
 from bs4 import BeautifulSoup
 from random import shuffle
 import requests
 from Data import Country
+from Connection import save
 
-DB = firebase.FirebaseApplication('https://news-latest-24h.firebaseio.com')
 CATEGORY_LIST = {
     'general': 'n',
     'business': 'b',
@@ -71,7 +70,7 @@ def load():
                     count += 1
             shuffle(articles)
             (ARTICLES_JSON_FORMAT["articles"], ARTICLES_JSON_FORMAT["category_name"]) = articles, category
-            DB.put('/APIs/1/countries/%s/news/categories/' % i, '%s' % j, ARTICLES_JSON_FORMAT)
+            save('/APIs/1/countries/%s/news/categories/' % i, '%s' % j, ARTICLES_JSON_FORMAT)
 
 def splitTitle(title):
     global title_splited, aux, source_complete
@@ -116,7 +115,7 @@ def loadWorldCategoryUSA():
             count += 1
     shuffle(articles)
     (ARTICLES_JSON_FORMAT["articles"], ARTICLES_JSON_FORMAT["category_name"]) = articles, 'world'
-    DB.put('/APIs/0/countries/0/news/categories/', '5', ARTICLES_JSON_FORMAT)
+    save('/APIs/0/countries/0/news/categories/', '5', ARTICLES_JSON_FORMAT)
 
 def loadTechCategoryUK():
     articles = []
@@ -148,7 +147,7 @@ def loadTechCategoryUK():
             count += 1
     shuffle(articles)
     (ARTICLES_JSON_FORMAT["articles"], ARTICLES_JSON_FORMAT["category_name"]) = articles, 'technology'
-    DB.put('/APIs/0/countries/1/news/categories/', '4', ARTICLES_JSON_FORMAT)
+    save('/APIs/0/countries/1/news/categories/', '4', ARTICLES_JSON_FORMAT)
 
 def loadWorldCategoryUK():
     articles = []
@@ -180,7 +179,7 @@ def loadWorldCategoryUK():
             count += 1
     shuffle(articles)
     (ARTICLES_JSON_FORMAT["articles"], ARTICLES_JSON_FORMAT["category_name"]) = articles, 'world'
-    DB.put('/APIs/0/countries/1/news/categories/', '5', ARTICLES_JSON_FORMAT)
+    save('/APIs/0/countries/1/news/categories/', '5', ARTICLES_JSON_FORMAT)
 
 
 if __name__ == '__main__':

@@ -1,9 +1,7 @@
-from firebase import firebase
 import requests
 from Data import Country
+from Connection import save
 
-URL_DB = 'https://news-latest-24h.firebaseio.com'
-DB = firebase.FirebaseApplication(URL_DB)
 CATEGORY_LIST = [
     'general',
     'business',
@@ -26,7 +24,7 @@ def load():
                     % (category, country.language_code, country.edition_code_newsapi, country.NEWSAPI_KEY))
                 json = req.json().get('articles')
                 (ARTICLES_JSON_FORMAT["articles"], ARTICLES_JSON_FORMAT["category_name"]) = json, category
-                DB.put('/APIs/0/countries/%s/news/categories/' % i, '%s' % j, ARTICLES_JSON_FORMAT)
+                save('/APIs/0/countries/%s/news/categories/' % i, '%s' % j, ARTICLES_JSON_FORMAT)
 
 if __name__ == '__main__':
     load()
